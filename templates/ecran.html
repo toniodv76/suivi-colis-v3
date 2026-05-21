@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="10">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colis à envoyer</title>
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:Arial, Helvetica, sans-serif; }
+
+    body {
+      background:#021126;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    .topbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 30px;
+      border-bottom:1px solid rgba(255,255,255,0.1);
+    }
+
+    .topbar h1 {
+      font-size:48px;
+      font-weight:900;
+      letter-spacing:1px;
+    }
+
+    .heure {
+      font-size:32px;
+      font-weight:800;
+    }
+
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(560px, 1fr));
+      gap:18px;
+      padding:18px;
+    }
+
+    .card {
+      background:#f5f5f5;
+      color:#021126;
+      border-radius:24px;
+      padding:24px;
+      position:relative;
+      min-height:190px;
+      max-height:310px;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .card.afaire { border-left:14px solid #ff304f; }
+    .card.encours { border-left:14px solid #2563eb; }
+    .card.fait { border-left:14px solid #16a34a; }
+
+    .date {
+      position:absolute;
+      top:20px;
+      right:24px;
+      font-size:20px;
+      font-weight:bold;
+      color:#304f73;
+    }
+
+    .client {
+      font-size:clamp(28px, 2vw, 42px);
+      font-weight:900;
+      margin-bottom:8px;
+      padding-right:160px;
+    }
+
+    .adresse {
+      font-size:clamp(18px, 1.3vw, 26px);
+      font-weight:bold;
+      color:#1f3552;
+      margin-bottom:16px;
+    }
+
+    .contenu {
+      font-size:clamp(18px, 1.35vw, 27px);
+      line-height:1.25;
+      white-space:pre-wrap;
+      overflow-wrap:break-word;
+      word-break:break-word;
+      max-height:125px;
+      overflow:hidden;
+    }
+
+    .badges {
+      display:flex;
+      gap:10px;
+      margin-top:18px;
+      flex-wrap:wrap;
+    }
+
+    .badge {
+      padding:10px 16px;
+      border-radius:999px;
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .badge-red { background:#ffd6dc; color:#9b0017; }
+    .badge-blue { background:#dbeafe; color:#1d4f91; }
+    .badge-green { background:#d8f5dc; color:#0d6b24; }
+
+    @media (max-width: 700px) {
+      .grid { grid-template-columns:1fr; }
+      .topbar h1 { font-size:34px; }
+      .heure { font-size:22px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <h1>COLIS À ENVOYER</h1>
+  <div class="heure" id="heure"></div>
+</div>
+
+<div class="grid">
+  {% for c in colis %}
+    {% set cls = 'afaire' if c.statut == 'A FAIRE' else ('encours' if c.statut == 'EN COURS' else 'fait') %}
+
+    <div class="card {{ cls }}">
+      <div class="date">{{ c.created_at|string|truncate(10, True, '') }}</div>
+
+      <div>
+        <div class="client">{{ c.client }}</div>
+        <div class="adresse">{{ c.adresse }}</div>
+        <div class="contenu">{{ c.contenu }}</div>
+      </div>
+
+      <div class="badges">
+        {% if c.statut == 'A FAIRE' %}
+          <span class="badge badge-red">A FAIRE</span>
+        {% elif c.statut == 'EN COURS' %}
+          <span class="badge badge-blue">EN COURS</span>
+        {% else %}
+          <span class="badge badge-green">FAIT</span>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date();
+  const options = { weekday:'long', hour:'2-digit', minute:'2-digit' };
+  document.getElementById('heure').innerText = now.toLocaleDateString('fr-FR', options);
+}
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+
+</body>
+</html>

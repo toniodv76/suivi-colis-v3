@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Modifier colis</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="header">
+  <h1>Modifier colis</h1>
+  <a class="btn btn-grey" href="/?code={{ code }}">Retour</a>
+</div>
+
+<div class="container">
+  <div class="card-panel">
+    <form method="post" action="/edit/{{ item.id }}?code={{ code }}">
+      <div class="form-grid">
+        <input name="client" value="{{ item.client }}" placeholder="Client" required>
+        <input name="adresse" value="{{ item.adresse }}" placeholder="Adresse" required>
+        <textarea name="contenu" placeholder="Description commande / colis / reliquat..." required>{{ item.contenu }}</textarea>
+        <select name="statut">
+          <option {% if item.statut == 'A FAIRE' %}selected{% endif %}>A FAIRE</option>
+          <option {% if item.statut == 'EN COURS' %}selected{% endif %}>EN COURS</option>
+          <option {% if item.statut == 'FAIT' %}selected{% endif %}>FAIT</option>
+        </select>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

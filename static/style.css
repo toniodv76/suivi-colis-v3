@@ -1,0 +1,139 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f2f5f9;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #06162b;
+}
+
+.header {
+  background: #021126;
+  color: white;
+  padding: 22px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 24px auto;
+  padding: 0 18px;
+}
+
+.card-panel {
+  background: white;
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  margin-bottom: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-grid textarea,
+.form-grid input,
+.form-grid select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #d8dee8;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.form-grid textarea {
+  grid-column: span 2;
+  min-height: 120px;
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.btn {
+  border: none;
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.btn-primary { background: #021126; color: white; }
+.btn-red { background: #ff304f; color: white; }
+.btn-blue { background: #2563eb; color: white; }
+.btn-green { background: #16a34a; color: white; }
+.btn-grey { background: #e5e7eb; color: #1f3552; }
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+th {
+  background: #021126;
+  color: white;
+  text-align: left;
+  padding: 14px;
+}
+
+td {
+  padding: 14px;
+  border-bottom: 1px solid #edf0f5;
+  vertical-align: top;
+}
+
+.desc {
+  max-width: 420px;
+  white-space: pre-wrap;
+}
+
+.badge {
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.badge-red { background: #ffd6dc; color: #9b0017; }
+.badge-blue { background: #dbeafe; color: #1d4f91; }
+.badge-green { background: #d8f5dc; color: #0d6b24; }
+
+.login {
+  max-width: 420px;
+  margin: 120px auto;
+}
+
+@media (max-width: 800px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-grid textarea {
+    grid-column: span 1;
+  }
+}

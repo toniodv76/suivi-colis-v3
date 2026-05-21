@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Suivi colis V3</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="header">
+  <h1>Suivi colis V3</h1>
+  <div>
+    <a class="btn btn-grey" href="/ecran" target="_blank">Écran atelier</a>
+    <a class="btn btn-grey" href="/historique?code={{ code }}">Historique</a>
+    <a class="btn btn-grey" href="/export/monthly?code={{ code }}">Export mois</a>
+    <a class="btn btn-grey" href="/export/all?code={{ code }}">Export complet</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="card-panel">
+    <h2>Ajouter un colis</h2>
+    <form method="post" action="/?code={{ code }}">
+      <div class="form-grid">
+        <input name="client" placeholder="Client" required>
+        <input name="adresse" placeholder="Adresse" required>
+        <textarea name="contenu" placeholder="Description commande / colis / reliquat..." required></textarea>
+        <select name="statut">
+          <option>A FAIRE</option>
+          <option>EN COURS</option>
+          <option>FAIT</option>
+        </select>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">Ajouter</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card-panel">
+    <h2>Liste colis</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Adresse</th>
+            <th>Description</th>
+            <th>Statut</th>
+            <th>Créé</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in colis %}
+          <tr>
+            <td><strong>{{ c.client }}</strong></td>
+            <td>{{ c.adresse }}</td>
+            <td class="desc">{{ c.contenu }}</td>
+            <td>
+              {% if c.statut == 'A FAIRE' %}
+                <span class="badge badge-red">A FAIRE</span>
+              {% elif c.statut == 'EN COURS' %}
+                <span class="badge badge-blue">EN COURS</span>
+              {% else %}
+                <span class="badge badge-green">FAIT</span>
+              {% endif %}
+            </td>
+            <td>{{ c.created_at }}</td>
+            <td>
+              <div class="actions">
+                <a class="btn btn-red" href="/statut/{{ c.id }}/A-FAIRE?code={{ code }}">A faire</a>
+                <a class="btn btn-blue" href="/statut/{{ c.id }}/EN-COURS?code={{ code }}">En cours</a>
+                <a class="btn btn-green" href="/statut/{{ c.id }}/FAIT?code={{ code }}">Fait</a>
+                <a class="btn btn-grey" href="/edit/{{ c.id }}?code={{ code }}">Modifier</a>
+                <a class="btn btn-grey" href="/delete/{{ c.id }}?code={{ code }}" onclick="return confirm('Supprimer ce colis ?')">Supprimer</a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
